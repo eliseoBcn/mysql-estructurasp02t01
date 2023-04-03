@@ -56,16 +56,55 @@ select p.nombre as producto , precio, f.nombre as fabricante from tienda.product
 -- 23
 select p.codigo,p.nombre as producto, precio, f.nombre as fabricante ,f.codigo as codigo_fabricante from tienda.producto p inner join tienda.fabricante f on f.codigo = p.codigo_fabricante;
 -- 24
--- 25
--- 26
 
+SELECT  min(a.precio)  as precio_minimo , a.nombre , b.nombre   FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo;
+
+-- 25
+
+
+SELECT  max(a.precio)  as precio_minimo , a.nombre , b.nombre   FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo;
+-- 26   Buscanmos por el nombre del fabricante o directamente por nombre
+SELECT   a.nombre     FROM  tienda.producto a where  a.codigo_fabricante = 2;
+SELECT    a.nombre     FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo where b.codigo in ( select codigo from tienda.fabricante where nombre = 'Lenovo');
 -- 27
 
--- 28
+SELECT    a.nombre     FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo where  precio > 200 and    b.codigo in ( select codigo from tienda.fabricante where nombre = 'Crucial');
+SELECT   a.nombre     FROM  tienda.producto a where  a.codigo_fabricante = 6 and precio > 200 ;
+-- 28     ojo en el documento del ejercicio los nombres de los FABRICANTES ESTAN     ****mal****
 
+SELECT    a.nombre     FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo where     b.codigo in ( select codigo from tienda.fabricante where nombre = 'Asus' or  nombre = 'Hewlett-Packard' );
+SELECT   a.nombre     FROM  tienda.producto a where  a.codigo_fabricante = 3  or  codigo_fabricante = 1 ;
 -- 29
 
+SELECT    a.nombre     FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo  where     b.codigo in ( select codigo from tienda.fabricante where nombre IN ( 'Asus' ,   'Hewlett-Packard') );
+SELECT   a.nombre     FROM  tienda.producto a where  a.codigo_fabricante IN ( 3, 1) ;
+
 -- 30
+
+SELECT    a.nombre     FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo where     b.codigo in ( select codigo from tienda.fabricante where nombre like '%e' );
+
+-- 31
+
+SELECT    a.nombre ,a.precio    FROM  tienda.producto a inner join tienda.fabricante b  on a.codigo_fabricante = b.codigo where     b.codigo in ( select codigo from tienda.fabricante where nombre like '%w%' );
+
+--  32
+
+select p.nombre as producto, precio, f.nombre as fabricante from tienda.producto p inner join tienda.fabricante f on f.codigo = p.codigo_fabricante where precio >= 180 order by precio asc;
+select p.nombre as producto, precio, f.nombre as fabricante from tienda.producto p inner join tienda.fabricante f on f.codigo = p.codigo_fabricante where precio >= 180 order by precio desc;
+
+--   33
+
+select  codigo , nombre   from tienda.fabricante    where codigo in ( select codigo_fabricante from  tienda.producto);
+
+-- 34 los  fabricantes sin productos los tendran a null ( tendria que poderse cambia a "" o espacios
+
+select p.nombre as producto, precio, f.nombre as fabricante from tienda.producto p  right  join tienda.fabricante f on f.codigo = p.codigo_fabricante  ;
+
+-- 35
+
+select   f.nombre as fabricante from tienda.producto p  right  join tienda.fabricante f on f.codigo = p.codigo_fabricante  where p.nombre IS NULL;
+
+
 --------------------------------------------
 -- base de  datos universidad 
 --------------------------------------------
